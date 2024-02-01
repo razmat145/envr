@@ -10,6 +10,8 @@ export interface IVariableDescription {
   defaultsTo?: unknown;
 
   partOfEnum?: Array<string | number>;
+
+  isCronString?: boolean;
 }
 
 export enum EVariableType {

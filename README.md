@@ -23,7 +23,7 @@ e.g.
 
 ```typescript
 // <cwd>/src/env.ts
-import { EnvVariable, IsPartOfEnum, DefaultsTo } from 'envrr';
+import { EnvVariable, IsPartOfEnum, DefaultsTo, IsCronString } from 'envrr';
 
 export class Environment {
   @EnvVariable('APPLICATION_NAME')
@@ -43,6 +43,10 @@ export class Environment {
 
   @EnvVariable('SECRET_EXPIRE_AT')
   secretExpireAt: Date;
+
+  @EnvVariable('NOTIFY_PERIOD')
+  @IsCronString()
+  notifyPeriod: string;
 }
 
 class RedisConnectionConfig {
@@ -194,6 +198,7 @@ Note: in case the environment is invalid, `envrr` will throw `error`s in the ord
 - `@EnvVariable` - required on any `Environment` property that requires validation/loading
 - `@IsPartOfEnum` - used to restrict allowed values to a predefined enum
 - `@DefaultsTo` - used to default env variables if not present
+- `@IsCronString` - validates the string to be an either 5 char or 6 char cron string
 
 ### Configuration
 

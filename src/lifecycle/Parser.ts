@@ -67,6 +67,10 @@ class Parser {
             variableDescription.defaultsTo = annotation.args[0];
             break;
 
+          case 'IsCronString':
+            variableDescription.isCronString = true;
+            break;
+
           default:
             break;
         }

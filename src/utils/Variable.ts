@@ -30,6 +30,72 @@ class Variable {
     );
   }
 
+  public isCronString(value: string): boolean {
+    const fields = value.split(' ');
+
+    if (fields.length !== 5 && fields.length !== 6) {
+      return false;
+    }
+
+    const ranges = [
+      [0, 59],
+      [0, 59],
+      [0, 23],
+      [1, 31],
+      [1, 12],
+      [0, 7],
+    ];
+
+    if (fields.length === 5) {
+      ranges.shift();
+    }
+
+    for (let i = 0; i < fields.length; i++) {
+      const hasCronRange = fields[i].includes('-');
+      const hasCronStep = fields[i].includes('/');
+      const isCronWildcard = fields[i] === '*';
+
+      switch (true) {
+        case hasCronRange:
+          const [start, end] = fields[i]
+            .split('-')
+            .map((f) => this.extractNumber(f));
+
+          if (!(start >= ranges[i][0] && end <= ranges[i][1] && start < end)) {
+            return false;
+          }
+          break;
+
+        case hasCronStep:
+          const parts = fields[i].split('/');
+          const step = this.extractNumber(parts[1]);
+
+          if (
+            parts[0] !== '*' &&
+            !(
+              this.extractNumber(parts[0]) >= ranges[i][0] &&
+              this.extractNumber(parts[0]) <= ranges[i][1] &&
+              step > 0 &&
+              step <= ranges[i][1]
+            )
+          ) {
+            return false;
+          }
+          break;
+
+        case !isCronWildcard:
+          const value = this.extractNumber(fields[i]);
+
+          if (!(value >= ranges[i][0] && value <= ranges[i][1])) {
+            return false;
+          }
+          break;
+      }
+    }
+
+    return true;
+  }
+
   public extractString(value: string): string {
     return value.trim();
   }

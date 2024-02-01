@@ -15,3 +15,9 @@ export function DefaultsTo(value: any): Function {
     return;
   };
 }
+
+export function IsCronString(): Function {
+  return () => {
+    return;
+  };
+}

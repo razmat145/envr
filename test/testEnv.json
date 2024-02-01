@@ -136,6 +136,14 @@
         "type": "Date",
         "required": true,
         "annotations": [{ "name": "EnvVariable", "args": ["SECRET_EXPIRE_AT"] }]
+      },
+      "notifyPeriod": {
+        "type": "string",
+        "required": true,
+        "annotations": [
+          { "name": "EnvVariable", "args": ["NOTIFY_PERIOD"] },
+          { "name": "IsCronString" }
+        ]
       }
     }
   }

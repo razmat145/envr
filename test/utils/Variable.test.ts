@@ -188,4 +188,35 @@ describe('Variable', () => {
       );
     });
   });
+
+  describe('isCronString', () => {
+    it('should return true if the value is a cron string', () => {
+      expect(Variable.isCronString('* * * * *')).toBe(true);
+      expect(Variable.isCronString('* * * * * *')).toBe(true);
+      expect(Variable.isCronString('0 0 */5 * * *')).toBe(true);
+      expect(Variable.isCronString('0 0 */5 * *')).toBe(true);
+      expect(Variable.isCronString('0 0 */5 * 1 *')).toBe(true);
+      expect(Variable.isCronString('0 0 */5 * 1')).toBe(true);
+      expect(Variable.isCronString('0 0 15 * */1 *')).toBe(true);
+      expect(Variable.isCronString('0 0 15 * */1')).toBe(true);
+      expect(Variable.isCronString('0-59 0-59 0-23 1-31 1-12 0-7')).toBe(true);
+      expect(Variable.isCronString('0/59 0/59 0/23 1/31 1/12 0/7')).toBe(true);
+    });
+
+    it('should return false if the value is not a cron string', () => {
+      expect(
+        Variable.isCronString('0-59/59 0-59/59 0-23/23 1-31/31 1-12/12 0-7/7')
+      ).toBe(false);
+      expect(Variable.isCronString('0 0 0 0 0 0')).toBe(false);
+      expect(Variable.isCronString('a')).toBe(false);
+      expect(Variable.isCronString('1')).toBe(false);
+      expect(Variable.isCronString('0.0')).toBe(false);
+      expect(Variable.isCronString('0.0.0')).toBe(false);
+      expect(Variable.isCronString('0 0 0 0 0')).toBe(false);
+      expect(Variable.isCronString('0 0 0 0 99')).toBe(false);
+      expect(Variable.isCronString('150 0 0 0 0 *')).toBe(false);
+      expect(Variable.isCronString('* 120 * * *')).toBe(false);
+      expect(Variable.isCronString('* * 25 * * *')).toBe(false);
+    });
+  });
 });

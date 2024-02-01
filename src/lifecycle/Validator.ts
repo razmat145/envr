@@ -25,6 +25,8 @@ class Validator {
       if (partOfEnum) {
         this.validateEnvironmentVariableEnum(envVarDescription, envVarValue);
       }
+
+      this.validateDecoratedProperties(envVarDescription, envVarValue);
     }
   }
 
@@ -64,6 +66,19 @@ class Validator {
           );
         }
         break;
+    }
+  }
+
+  private validateDecoratedProperties(
+    envVarDescription: IVariableDescription,
+    envVarValue: string
+  ) {
+    const { isCronString } = envVarDescription;
+
+    if (isCronString && !Variable.isCronString(envVarValue)) {
+      throw new Error(
+        `Environment variable ${envVarDescription.target} must be a valid cron string`
+      );
     }
   }
 

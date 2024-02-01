@@ -20,6 +20,7 @@ describe('Validator', () => {
     process.env['PROMETHEUS_PORT'] = undefined;
     process.env['PROMETHEUS_DEFAULT_QUANTILES'] = undefined;
     process.env['SECRET_EXPIRE_AT'] = undefined;
+    process.env['NOTIFY_PERIOD'] = undefined;
   });
 
   describe('validateEnvironment', () => {
@@ -188,6 +189,24 @@ describe('Validator', () => {
       );
 
       process.env['SECRET_EXPIRE_AT'] = '2021-12-31';
+
+      expect(() => {
+        Validator.validateEnvironment(
+          <IVariableDescription[]>testParsedEnvDescription
+        );
+      }).toThrowError('Environment variable NOTIFY_PERIOD is required');
+
+      process.env['NOTIFY_PERIOD'] = 'ABCDEF';
+
+      expect(() => {
+        Validator.validateEnvironment(
+          <IVariableDescription[]>testParsedEnvDescription
+        );
+      }).toThrowError(
+        'Environment variable NOTIFY_PERIOD must be a valid cron string'
+      );
+
+      process.env['NOTIFY_PERIOD'] = '* */1 * * *';
 
       expect(() => {
         Validator.validateEnvironment(

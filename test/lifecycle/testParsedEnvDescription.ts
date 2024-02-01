@@ -89,4 +89,11 @@ export const testParsedEnvDescription = [
     target: 'SECRET_EXPIRE_AT',
     type: 'date',
   },
+  {
+    isCronString: true,
+    isRequired: true,
+    name: 'notifyPeriod',
+    target: 'NOTIFY_PERIOD',
+    type: 'string',
+  },
 ];
