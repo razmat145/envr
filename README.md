@@ -5,7 +5,7 @@ Nodejs Typescript Environment Validator and Loader
 ## Motivation
 
 Tired of repeating (or copy/paste) the same environment variable handling and validation over and over again?  
-`envr` aims to help with that!
+`envrr` aims to help with that!
 
 It does so by using an `Environment` typed and decorated class via a small build step
 
@@ -23,7 +23,7 @@ e.g.
 
 ```typescript
 // <cwd>/src/env.ts
-import { EnvVariable, IsPartOfEnum, DefaultsTo } from 'envr';
+import { EnvVariable, IsPartOfEnum, DefaultsTo } from 'envrr';
 
 export class Environment {
   @EnvVariable('APPLICATION_NAME')
@@ -93,7 +93,7 @@ The type definition of the `Environment` class must be built in order to survive
 We use `tparserr` to translate the type definition into a `.json` file, and we do so as below:  
 `tparserr generate --includeOnlyExports --enableDecorators -f=<env.ts target path> -o=<env.json output path>`
 
-By default `envr` looks for the `env.json` type descriptions under `<cwd>/env.json` - this however can be changed via adjusting the `targetPath` passed to the `envr` initialisation.
+By default `envrr` looks for the `env.json` type descriptions under `<cwd>/env.json` - this however can be changed via adjusting the `targetPath` passed to the `envrr` initialisation.
 
 Following the example above, we can build the types by either manually running:  
 `npx tparserr generate --includeOnlyExports --enableDecorators -f=./src/env.ts -o=./env.json`  
@@ -114,7 +114,7 @@ e.g.
 
 ### Usage
 
-It is recommended to initialise `envr` as soon as possible during the app startup in order to validate if the whole environment corresponds to the typed `Environment`; after which it can be used/reused throughout the application without having to `initialize` (singleton).
+It is recommended to initialise `envrr` as soon as possible during the app startup in order to validate if the whole environment corresponds to the typed `Environment`; after which it can be used/reused throughout the application without having to `initialize` (singleton).
 
 ```typescript
 // <cwd>/src/index.ts
@@ -134,7 +134,7 @@ process.env.PROMETHEUS_PORT = '9090';
 process.env.PROMETHEUS_DEFAULT_QUANTILES = '0.5, 0.9, 0.99';
 
 import { Environment } from './env';
-import { Enver } from 'envr';
+import { Enver } from 'envrr';
 
 (async function main() {
   await Enver.initialize<Environment>();
@@ -171,11 +171,11 @@ import { Enver } from 'envr';
 })().catch(console.error);
 ```
 
-Note: in case the environment is invalid, `envr` will throw `error`s in the order of validation/type description (fail-fast)
+Note: in case the environment is invalid, `envrr` will throw `error`s in the order of validation/type description (fail-fast)
 
 ### API tldr;
 
-- `initialize` - used to initialise `envr`
+- `initialize` - used to initialise `envrr`
 - `getEnv` - used to get the whole loaded environment
 - `has` - checks whether a json path (e.g. `nesting.key.otherKey`) to an environment variable exists
 - `get` - used to get specific env variable values
