@@ -175,7 +175,7 @@ Note: in case the environment is invalid, `envr` will throw `error`s in the orde
 
 ### API tldr;
 
-- `initialise` - used to initialise `envr`
+- `initialize` - used to initialise `envr`
 - `getEnv` - used to get the whole loaded environment
 - `has` - checks whether a json path (e.g. `nesting.key.otherKey`) to an environment variable exists
 - `get` - used to get specific env variable values
