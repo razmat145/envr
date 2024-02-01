@@ -1,0 +1,86 @@
+export const testParsedEnvDescription = [
+  {
+    name: 'applicationName',
+    target: 'APPLICATION_NAME',
+    type: 'string',
+    isRequired: true,
+  },
+  {
+    name: 'port',
+    target: 'PORT',
+    type: 'number',
+    isRequired: true,
+    defaultsTo: 3000,
+  },
+  {
+    name: 'logLevel',
+    target: 'LOG_LEVEL',
+    type: 'string',
+    isRequired: true,
+    partOfEnum: ['debug', 'info', 'warn', 'error'],
+  },
+  {
+    name: 'redis.host',
+    target: 'REDIS_HOST',
+    type: 'string',
+    isRequired: true,
+  },
+  {
+    name: 'redis.port',
+    target: 'REDIS_PORT',
+    type: 'number',
+    isRequired: true,
+  },
+  {
+    name: 'redis.username',
+    target: 'REDIS_USERNAME',
+    type: 'string',
+    isRequired: true,
+  },
+  {
+    name: 'redis.password',
+    target: 'REDIS_PASSWORD',
+    type: 'string',
+    isRequired: true,
+  },
+  {
+    name: 'redis.indexes',
+    target: 'REDIS_INDEXES',
+    type: 'string[]',
+    isRequired: true,
+  },
+  {
+    name: 'prometheus.enabled',
+    target: 'PROMETHEUS_ENABLED',
+    type: 'boolean',
+    isRequired: true,
+    defaultsTo: false,
+  },
+  {
+    name: 'prometheus.host',
+    target: 'PROMETHEUS_HOST',
+    type: 'string',
+    isRequired: true,
+  },
+  {
+    name: 'prometheus.port',
+    target: 'PROMETHEUS_PORT',
+    type: 'number',
+    isRequired: true,
+  },
+  {
+    name: 'prometheus.defaultQuantiles',
+    target: 'PROMETHEUS_DEFAULT_QUANTILES',
+    type: 'number[]',
+  },
+  {
+    name: 'prometheus.flags.enabledEndpoints',
+    target: 'PROMETHEUS_ENABLED_ENDPOINTS',
+    type: 'string[]',
+  },
+  {
+    name: 'prometheus.flags.enabledUserIds',
+    target: 'PROMETHEUS_ENABLED_USER_IDS',
+    type: 'number[]',
+  },
+];

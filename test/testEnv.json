@@ -1,0 +1,137 @@
+[
+  {
+    "name": "Environment",
+    "type": "object",
+    "properties": {
+      "applicationName": {
+        "type": "string",
+        "required": true,
+        "annotations": [{ "name": "EnvVariable", "args": ["APPLICATION_NAME"] }]
+      },
+      "port": {
+        "type": "number",
+        "required": true,
+        "annotations": [
+          { "name": "EnvVariable", "args": ["PORT"] },
+          { "name": "DefaultsTo", "args": [3000] }
+        ]
+      },
+      "logLevel": {
+        "type": "string",
+        "required": true,
+        "annotations": [
+          { "name": "EnvVariable", "args": ["LOG_LEVEL"] },
+          {
+            "name": "IsPartOfEnum",
+            "args": [["debug", "info", "warn", "error"]]
+          }
+        ]
+      },
+      "redis": {
+        "type": "object",
+        "properties": {
+          "host": {
+            "type": "string",
+            "required": true,
+            "annotations": [{ "name": "EnvVariable", "args": ["REDIS_HOST"] }]
+          },
+          "port": {
+            "type": "number",
+            "required": true,
+            "annotations": [{ "name": "EnvVariable", "args": ["REDIS_PORT"] }]
+          },
+          "username": {
+            "type": "string",
+            "required": true,
+            "annotations": [
+              { "name": "EnvVariable", "args": ["REDIS_USERNAME"] }
+            ]
+          },
+          "password": {
+            "type": "string",
+            "required": true,
+            "annotations": [
+              { "name": "EnvVariable", "args": ["REDIS_PASSWORD"] }
+            ]
+          },
+          "indexes": {
+            "type": "array",
+            "items": { "type": "string" },
+            "required": true,
+            "annotations": [
+              { "name": "EnvVariable", "args": ["REDIS_INDEXES"] }
+            ]
+          }
+        },
+        "required": true
+      },
+      "prometheus": {
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "required": true,
+            "annotations": [
+              { "name": "EnvVariable", "args": ["PROMETHEUS_ENABLED"] },
+              { "name": "DefaultsTo", "args": [false] }
+            ]
+          },
+          "host": {
+            "type": "string",
+            "required": true,
+            "annotations": [
+              { "name": "EnvVariable", "args": ["PROMETHEUS_HOST"] }
+            ]
+          },
+          "port": {
+            "type": "number",
+            "required": true,
+            "annotations": [
+              { "name": "EnvVariable", "args": ["PROMETHEUS_PORT"] }
+            ]
+          },
+          "defaultQuantiles": {
+            "type": "array",
+            "items": { "type": "number" },
+            "required": false,
+            "annotations": [
+              {
+                "name": "EnvVariable",
+                "args": ["PROMETHEUS_DEFAULT_QUANTILES"]
+              }
+            ]
+          },
+          "flags": {
+            "type": "object",
+            "properties": {
+              "enabledEndpoints": {
+                "type": "array",
+                "items": { "type": "string" },
+                "required": false,
+                "annotations": [
+                  {
+                    "name": "EnvVariable",
+                    "args": ["PROMETHEUS_ENABLED_ENDPOINTS"]
+                  }
+                ]
+              },
+              "enabledUserIds": {
+                "type": "array",
+                "items": { "type": "number" },
+                "required": false,
+                "annotations": [
+                  {
+                    "name": "EnvVariable",
+                    "args": ["PROMETHEUS_ENABLED_USER_IDS"]
+                  }
+                ]
+              }
+            },
+            "required": false
+          }
+        },
+        "required": true
+      }
+    }
+  }
+]
