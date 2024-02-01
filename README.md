@@ -114,9 +114,10 @@ e.g.
 
 ### Usage
 
-It is recommended to initialise `envr` as soon as possible during the app startup in order to validate if the whole environment corresponds to the typed `Environment`; after witch it can be used/reused throughout the application without having to `initialize` (singleton).
+It is recommended to initialise `envr` as soon as possible during the app startup in order to validate if the whole environment corresponds to the typed `Environment`; after which it can be used/reused throughout the application without having to `initialize` (singleton).
 
 ```typescript
+// <cwd>/src/index.ts
 process.env.APPLICATION_NAME = 'test';
 process.env.PORT = '3000';
 process.env.LOG_LEVEL = 'debug';
@@ -171,6 +172,32 @@ import { Enver } from 'envr';
 ```
 
 Note: in case the environment is invalid, `envr` will throw `error`s in the order of validation/type description (fail-fast)
+
+### API tldr;
+
+- `initialise` - used to initialise `envr`
+- `getEnv` - used to get the whole loaded environment
+- `has` - checks whether a json path (e.g. `nesting.key.otherKey`) to an environment variable exists
+- `get` - used to get specific env variable values
+
+### Supported Decorators
+
+- `@EnvVariable` - required on any `Environment` property that requires validation/loading
+- `@IsPartOfEnum` - used to restrict allowed values to a predefined enum
+- `@DefaultsTo` - used to default env variables if not present
+
+### Configuration
+
+```typescript
+export interface IEnverConfig {
+  // by default it points to <cwd>/env.json for its' to be loaded type definitions
+  targetPath?: string;
+}
+```
+
+### Suggestions
+
+Any improvement ideas/suggestions; feel free to open an issue :)
 
 ## License
 
