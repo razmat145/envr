@@ -56,6 +56,14 @@ class Validator {
           );
         }
         break;
+
+      case EVariableType.DATE:
+        if (!Variable.isDate(envVarValue)) {
+          throw new Error(
+            `Environment variable ${envVarDescription.target} must be a castable date`
+          );
+        }
+        break;
     }
   }
 

@@ -24,6 +24,12 @@ class Variable {
     );
   }
 
+  public isDate(value: string): boolean {
+    return (
+      !this.isNumber(value) && !isNaN(Date.parse(this.extractString(value)))
+    );
+  }
+
   public extractString(value: string): string {
     return value.trim();
   }
@@ -42,6 +48,10 @@ class Variable {
 
   public extractArrayOfNumbers(value: string): number[] {
     return value.split(',').map((element) => Number(element.trim()));
+  }
+
+  public extractDate(value: string): Date {
+    return new Date(this.extractString(value));
   }
 }
 

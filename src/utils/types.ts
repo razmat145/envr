@@ -22,6 +22,8 @@ export enum EVariableType {
   ARRAY_STRING = 'string[]',
 
   ARRAY_NUMBER = 'number[]',
+
+  DATE = 'date',
 }
 
 export interface IEnverConfig {

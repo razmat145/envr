@@ -93,6 +93,24 @@ describe('Variable', () => {
     });
   });
 
+  describe('isDate', () => {
+    it('should return true if the value is a date', () => {
+      expect(Variable.isDate('2021-01-01')).toBe(true);
+      expect(Variable.isDate('2021-01-01 00:00:00')).toBe(true);
+      expect(Variable.isDate('2021-01-01T00:00:00')).toBe(true);
+      expect(Variable.isDate('2021-01-01T00:00:00.000Z')).toBe(true);
+    });
+
+    it('should return false if the value is not a date', () => {
+      expect(Variable.isDate('a')).toBe(false);
+      expect(Variable.isDate('-1.1')).toBe(false);
+      expect(Variable.isDate('2021-01-01TAB:CD:00.000Z')).toBe(false);
+      expect(Variable.isDate('9999995412624')).toBe(false);
+      expect(Variable.isDate('9999995412624.000Z')).toBe(false);
+      expect(Variable.isDate('9999995412624.000')).toBe(false);
+    });
+  });
+
   describe('extractString', () => {
     it('should return the string', () => {
       expect(Variable.extractString('a')).toBe('a');
@@ -151,6 +169,23 @@ describe('Variable', () => {
       expect(Variable.extractArrayOfNumbers('1, 2, 3')).toEqual([1, 2, 3]);
       expect(Variable.extractArrayOfNumbers('1 , 2 , 3')).toEqual([1, 2, 3]);
       expect(Variable.extractArrayOfNumbers('1 ,2 ,3')).toEqual([1, 2, 3]);
+    });
+  });
+
+  describe('extractDate', () => {
+    it('should return the date', () => {
+      expect(Variable.extractDate('2021-01-01')).toEqual(
+        new Date('2021-01-01')
+      );
+      expect(Variable.extractDate('2021-01-01 00:00:00')).toEqual(
+        new Date('2021-01-01 00:00:00')
+      );
+      expect(Variable.extractDate('2021-01-01T00:00:00')).toEqual(
+        new Date('2021-01-01T00:00:00')
+      );
+      expect(Variable.extractDate('2021-01-01T00:00:00.000Z')).toEqual(
+        new Date('2021-01-01T00:00:00.000Z')
+      );
     });
   });
 });

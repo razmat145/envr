@@ -96,6 +96,9 @@ class Parser {
           typeDescription.items
         )}[]` as EVariableType;
 
+      case 'Date':
+        return EVariableType.DATE;
+
       default:
         return EVariableType.STRING;
     }

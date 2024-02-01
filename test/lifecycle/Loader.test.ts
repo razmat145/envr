@@ -20,6 +20,7 @@ describe('Loader', () => {
     process.env['PROMETHEUS_HOST'] = 'localhost';
     process.env['PROMETHEUS_PORT'] = '9090';
     process.env['PROMETHEUS_DEFAULT_QUANTILES'] = '0.5, 0.9, 0.99';
+    process.env['SECRET_EXPIRE_AT'] = '2021-12-31';
   });
 
   describe('loadEnvVariables', () => {
@@ -49,6 +50,7 @@ describe('Loader', () => {
             enabledUserIds: null,
           },
         },
+        secretExpireAt: new Date('2021-12-31'),
       });
     });
   });

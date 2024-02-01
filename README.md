@@ -40,6 +40,9 @@ export class Environment {
   redis: RedisConnectionConfig;
 
   prometheus: PrometheusConfig;
+
+  @EnvVariable('SECRET_EXPIRE_AT')
+  secretExpireAt: Date;
 }
 
 class RedisConnectionConfig {
@@ -132,6 +135,7 @@ process.env.PROMETHEUS_ENABLED = 'true';
 process.env.PROMETHEUS_HOST = 'localhost';
 process.env.PROMETHEUS_PORT = '9090';
 process.env.PROMETHEUS_DEFAULT_QUANTILES = '0.5, 0.9, 0.99';
+process.env.SECRET_EXPIRE_AT = '2025-05-01 12:00:00';
 
 import { Environment } from './env';
 import { Enver } from 'envrr';
@@ -168,6 +172,11 @@ import { Enver } from 'envrr';
     'enabledUserIds'
   >('prometheus', 'flags', 'enabledUserIds');
   // const prometheusEnabledUserIds: number[]
+
+  const secretExpireAt = Enver.get<Environment, 'secretExpireAt'>(
+    'secretExpireAt'
+  );
+  // const secretExpireAt: Date
 })().catch(console.error);
 ```
 

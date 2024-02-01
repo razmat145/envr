@@ -15,6 +15,9 @@ export class Environment {
   redis: RedisConnectionConfig;
 
   prometheus: PrometheusConfig;
+
+  @EnvVariable('SECRET_EXPIRE_AT')
+  secretExpireAt: Date;
 }
 
 class RedisConnectionConfig {

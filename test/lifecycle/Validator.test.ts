@@ -19,6 +19,7 @@ describe('Validator', () => {
     process.env['PROMETHEUS_HOST'] = undefined;
     process.env['PROMETHEUS_PORT'] = undefined;
     process.env['PROMETHEUS_DEFAULT_QUANTILES'] = undefined;
+    process.env['SECRET_EXPIRE_AT'] = undefined;
   });
 
   describe('validateEnvironment', () => {
@@ -174,7 +175,25 @@ describe('Validator', () => {
         Validator.validateEnvironment(
           <IVariableDescription[]>testParsedEnvDescription
         );
-      }).not.toThrowError();
+      }).toThrowError('Environment variable SECRET_EXPIRE_AT is required');
+
+      process.env['SECRET_EXPIRE_AT'] = 'ABCDEF';
+
+      expect(() => {
+        Validator.validateEnvironment(
+          <IVariableDescription[]>testParsedEnvDescription
+        );
+      }).toThrowError(
+        'Environment variable SECRET_EXPIRE_AT must be a castable date'
+      );
+
+      process.env['SECRET_EXPIRE_AT'] = '2021-12-31';
+
+      expect(() => {
+        Validator.validateEnvironment(
+          <IVariableDescription[]>testParsedEnvDescription
+        );
+      }).not.toThrow();
     });
   });
 });

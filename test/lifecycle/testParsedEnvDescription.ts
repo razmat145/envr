@@ -83,4 +83,10 @@ export const testParsedEnvDescription = [
     target: 'PROMETHEUS_ENABLED_USER_IDS',
     type: 'number[]',
   },
+  {
+    isRequired: true,
+    name: 'secretExpireAt',
+    target: 'SECRET_EXPIRE_AT',
+    type: 'date',
+  },
 ];

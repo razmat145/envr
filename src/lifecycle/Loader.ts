@@ -71,6 +71,9 @@ class Loader<T extends Object> {
       case EVariableType.ARRAY_NUMBER:
         return Variable.extractArrayOfNumbers(envVarValue);
 
+      case EVariableType.DATE:
+        return Variable.extractDate(envVarValue);
+
       default:
         throw new Error(
           `Environment variable ${variable.name} has an unsupported or not yet implemented type`
