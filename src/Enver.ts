@@ -2,20 +2,22 @@ import { Environment } from './Environment';
 
 import { IEnverConfig } from './utils/types';
 
-export class Enver<T extends Object> {
+export class Enver<GenericEnvironmentType extends Object> {
   private static instance: Enver<any>;
 
-  private environment: Environment<T>;
+  private environment: Environment<GenericEnvironmentType>;
 
   private constructor() {}
 
-  public static async initialize<T extends Object>(opts?: IEnverConfig) {
+  public static async initialize<GenericEnvironmentType extends Object>(
+    opts?: IEnverConfig
+  ) {
     if (Enver.instance) {
       return;
     }
 
-    const enver = new Enver<T>();
-    const environment = new Environment<T>(opts);
+    const enver = new Enver<GenericEnvironmentType>();
+    const environment = new Environment<GenericEnvironmentType>(opts);
 
     await environment.initialize();
 
@@ -23,7 +25,9 @@ export class Enver<T extends Object> {
     Enver.instance = enver;
   }
 
-  public static getEnv<T extends Object>(): T {
+  public static getEnv<
+    GenericEnvironmentType extends Object
+  >(): GenericEnvironmentType {
     if (!Enver.instance) {
       throw new Error('Environment is not initialized');
     }
@@ -31,28 +35,46 @@ export class Enver<T extends Object> {
     return Enver.instance.environment.getEnv();
   }
 
-  public static get<T, K extends keyof T>(key: K): T[K];
-  public static get<T, K extends keyof T, U extends keyof T[K]>(
-    key: K,
-    l1SubKey: U
-  ): T[K][U];
   public static get<
-    T,
-    K extends keyof T,
-    U extends keyof T[K],
-    V extends keyof T[K][U]
-  >(key: K, l1SubKey: U, l2SubKey: V): T[K][U][V];
+    GenericEnvironmentType,
+    GenericRootProperty extends keyof GenericEnvironmentType
+  >(key: GenericRootProperty): GenericEnvironmentType[GenericRootProperty];
   public static get<
-    T,
-    K extends keyof T,
-    U extends keyof T[K],
-    V extends keyof T[K][U]
-  >(key: K, l1SubKey?: U, l2SubKey?: V): T[K] | T[K][U] | T[K][U][V] {
+    GenericEnvironmentType,
+    GenericRootProperty extends keyof GenericEnvironmentType,
+    GenericFirstLevelNesting extends keyof GenericEnvironmentType[GenericRootProperty]
+  >(
+    key: GenericRootProperty,
+    l1SubKey: GenericFirstLevelNesting
+  ): GenericEnvironmentType[GenericRootProperty][GenericFirstLevelNesting];
+  public static get<
+    GenericEnvironmentType,
+    GenericRootProperty extends keyof GenericEnvironmentType,
+    GenericFirstLevelNesting extends keyof GenericEnvironmentType[GenericRootProperty],
+    GenericSecondLevelNesting extends keyof GenericEnvironmentType[GenericRootProperty][GenericFirstLevelNesting]
+  >(
+    key: GenericRootProperty,
+    l1SubKey: GenericFirstLevelNesting,
+    l2SubKey: GenericSecondLevelNesting
+  ): GenericEnvironmentType[GenericRootProperty][GenericFirstLevelNesting][GenericSecondLevelNesting];
+  public static get<
+    GenericEnvironmentType,
+    GenericRootProperty extends keyof GenericEnvironmentType,
+    GenericFirstLevelNesting extends keyof GenericEnvironmentType[GenericRootProperty],
+    GenericSecondLevelNesting extends keyof GenericEnvironmentType[GenericRootProperty][GenericFirstLevelNesting]
+  >(
+    key: GenericRootProperty,
+    l1SubKey?: GenericFirstLevelNesting,
+    l2SubKey?: GenericSecondLevelNesting
+  ):
+    | GenericEnvironmentType[GenericRootProperty]
+    | GenericEnvironmentType[GenericRootProperty][GenericFirstLevelNesting]
+    | GenericEnvironmentType[GenericRootProperty][GenericFirstLevelNesting][GenericSecondLevelNesting] {
     if (!Enver.instance) {
       throw new Error('Environment is not initialized');
     }
 
-    const baseValue = Enver.instance.environment.get(key);
+    const baseValue = Enver.instance.environment.get<GenericRootProperty>(key);
     if (!l1SubKey) {
       return baseValue;
     }
