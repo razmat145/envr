@@ -1,4 +1,4 @@
-# envr
+# envrr
 
 Nodejs Typescript Environment Validator and Loader
 
@@ -12,7 +12,7 @@ It does so by using an `Environment` typed and decorated class via a small build
 ### Installing
 
 ```
-npm install --save envr
+npm install --save envrr
 ```
 
 ### Setup
